@@ -18,7 +18,7 @@ def tweetform_view(request):
             Tweet.objects.create(
                 tweetbody=data['tweetbody'],
                 date_filed=data['date_filed'],
-                twittuser=request.user
+                twittuser=data['twittuser']
             )
 
             return HttpResponseRedirect(reverse("homepage"))
