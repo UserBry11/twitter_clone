@@ -1,11 +1,9 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from tweet.models import Tweet
 from tweet.forms import TweetForm
-
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate, logout
-
+from twitteruser.models import TwitterUser
+from notification.models import Notification
+import re
 
 def tweetform_view(request):
     html = "tweetform.html"
@@ -15,11 +13,28 @@ def tweetform_view(request):
 
         if form.is_valid():
             data = form.cleaned_data
-            Tweet.objects.create(
+
+            newTweet = Tweet(
                 tweetbody=data['tweetbody'],
                 date_filed=data['date_filed'],
-                twittuser=data['twittuser']
+                author=request.user
             )
+            newTweet.save()
+            # This newTweet['tweetbody'] is reaching into db
+            # if '@' in newTweet['tweetbody']:
+            pattern = re.search("@[\w\d]+", newTweet.tweetbody)
+
+            if pattern is not None:
+                pattern = pattern.group(0)[1:]
+                target_user = TwitterUser.objects.get(username=pattern)
+
+                Notification.objects.create(
+                    target_user=target_user,
+                    tweet=newTweet,
+                )
+
+            baseProfile = TwitterUser.objects.get(username=request.user)
+            newTweet.twittuser.add(baseProfile)
 
             return HttpResponseRedirect(reverse("homepage"))
 
