@@ -1,0 +1,49 @@
+{% extends "basetemp.html" %}
+
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block content %}
+<h1>This is the HomePage!</h1>
+<div style="background-color: rgb(245, 185, 195);">
+    <p style="background-color: rgb(252, 143, 143);">
+        Logged in as {{ request.user }}
+        {% if request.user.is_staff %}
+        -ADMIN
+        {%endif%}
+    </p>
+    <p style="background-color: rgb(224, 224, 224);">
+        Users and yourself in your area!&emsp;
+        {% for each in users_list %}
+        <a href="profile/{{each}}/">{{each}}&nbsp;</a>
+        {% endfor %}
+    </p>
+    <p style="background-color: rgb(212, 212, 212);">
+        Personal Tweet(s): {{tweetCount}}<br>
+        Currently Following: {{followerCount}}<br>
+        <a href="notification/">
+            Notification(s): </a>{{notification_count}}
+        </p>
+        <p>
+            <a href="logout/" ><button class="btn btn-danger btn-sm">Logout Here</button></a>
+        </p>
+    </div>
+    <p>
+        <a href="tweetform/"><button class="btn btn-primary">MAKE TWEET</button></a>
+    </p>
+
+
+    <ul>
+    {% for each in items %}
+        <li>
+            <a href="profile/{{each.author}}/">@{{each.author}}</a> - {{ each.date_filed }}
+            <a href="tweet/{{each.id}}/" >Your tweet-deets!</a>
+        </li>
+        <li>
+        {{each.tweetbody}}
+        </li><p></p>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

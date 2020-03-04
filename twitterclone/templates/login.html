@@ -1,0 +1,25 @@
+{% extends "basetemp.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            background-image: url('https://www.mindovermachines.com/wp-content/uploads/2019/03/rubber-ducky-2-800x400.jpg');
+        }
+    </style>
+    <h1>This is Login Page!</h1>
+    <h1>Welcome to Twitterclone. Login please</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login Here">
+    </form>
+    Or if NEW then hit the button below!
+    <p>
+        <a href="http://localhost:8000/signup/" ><button class="btn btn-info">Signup Here</button></a>
+    </p>
+
+{% endblock %}

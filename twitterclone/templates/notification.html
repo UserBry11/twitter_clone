@@ -1,0 +1,31 @@
+{% extends "basetemp.html" %}
+{% block title %}
+    Notifications
+{% endblock %}
+
+{% block content %}
+
+<a href="/" >Back Home</a>
+<h1 style="background-color: rgb(218, 218, 218);">Your Notifications</h1>
+{% if notify_count != 0 %}
+
+    {% for each in notifications %}
+        <ul>
+            <li>
+                Received on: {{each.date_filed}}<br>
+                By: {{each.tweet.author}}<br>
+                Body: {{each.tweet}}
+            </li>
+        </ul>
+        
+        <a href="http://localhost:8000/cleannotify/">
+            <button class="btn btn-warning">Clear Notifications</button>
+        </a>
+    {% endfor %}
+
+{% else %}
+
+        <h3>Whoa, nothing here.</h3>
+
+{% endif %}
+{% endblock %}

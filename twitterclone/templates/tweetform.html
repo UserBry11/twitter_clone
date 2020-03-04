@@ -1,0 +1,28 @@
+{% extends "basetemp.html" %}
+
+{% block content %}
+<p>
+    <a href="/">Go back to home</a><br>
+    Logged in as {{request.user}}
+</p>
+<!-- <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form> -->
+<h4>Create your tweet!</h4>
+
+Now with '@' technology!
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>
+        TweetBody: {{ form.tweetbody }}<br>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;140 chars or less, please.
+    </p>
+    <p>
+        Date Filed: {{form.date_filed}}
+    </p>
+
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+{% endblock %}
