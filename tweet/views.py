@@ -3,12 +3,18 @@ from tweet.models import Tweet
 from tweet.forms import TweetForm
 from twitteruser.models import TwitterUser
 from notification.models import Notification
+from django.views import View
 import re
 
-def tweetform_view(request):
+
+class TweetFormView(View):
     html = "tweetform.html"
 
-    if request.method == "POST":
+    def get(self, request):
+        form = TweetForm()
+        return render(request, self.html, {'form': form})
+
+    def post(self, request):
         form = TweetForm(request.POST)
 
         if form.is_valid():
@@ -33,17 +39,16 @@ def tweetform_view(request):
                     tweet=newTweet,
                 )
 
-            baseProfile = TwitterUser.objects.get(username=request.user)
-            newTweet.twittuser.add(baseProfile)
+                baseProfile = TwitterUser.objects.get(username=request.user)
+                newTweet.twittuser.add(baseProfile)
 
             return HttpResponseRedirect(reverse("homepage"))
 
-    form = TweetForm()
-
-    return render(request, html, {"form": form})
+        return render(request, self.html, {"form": form})
 
 
-def tweet(request, id):
-    item = Tweet.objects.get(id=id)
+class TweetView(View):
+    def get(self, request, id):
+        item = Tweet.objects.get(id=id)
 
-    return render(request, 'tweetdetail.html', {'item': item})
+        return render(request, 'tweetdetail.html', {'item': item})
