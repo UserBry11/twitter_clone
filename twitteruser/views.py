@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required(login_url='http://localhost:8000/login/')
+# @login_required(login_url='http://localhost:8000/login/')
 def homepage(request):
     html = "home.html"
 # User .get() to return one single query object. Use .filter() for multiple
