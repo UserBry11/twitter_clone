@@ -11,23 +11,23 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
     html = "home.html"
 # User .get() to return one single query object. Use .filter() for multiple
-    baseUser = TwitterUser.objects.get(username=request.user)
+    # baseUser = TwitterUser.objects.get(username=request.user)
     tweet_count = Tweet.objects.filter(twittuser__username=request.user).count()
 
-    followerCount = len(baseUser.follower.all())
+    # followerCount = len(baseUser.follower.all())
 
-    tweets = Tweet.objects.filter(twittuser__in=request.user.follower.all()).order_by("-date_filed")
+    # tweets = Tweet.objects.filter(twittuser__in=request.user.follower.all()).order_by("-date_filed")
 
-    notification = Notification.objects.filter(target_user=request.user).filter(seen=False)
+    # notification = Notification.objects.filter(target_user=request.user).filter(seen=False)
 
     users_list = TwitterUser.objects.all()
 
     return render(request, html,
                   {
-                    'items': tweets,
+                    # 'items': tweets,
                     'tweetCount': tweet_count,
-                    'followerCount': followerCount,
-                    'notification_count': notification.count(),
+                    # 'followerCount': followerCount,
+                    # 'notification_count': notification.count(),
                     'users_list': users_list,
                   })
 
